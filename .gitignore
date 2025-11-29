@@ -1,0 +1,12 @@
+# Ignorer toutes les classes compilées
+*.class
+
+# Ignorer les classes dans bin/WEB-INF/classes (optionnel si *.class suffit)
+bin/WEB-INF/classes/
+
+# Ignorer fichiers temporaires d'IDE (optionnel)
+*.log
+*.tmp
+*.swp
+
+

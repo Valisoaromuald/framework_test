@@ -1,87 +1,65 @@
 #!/bin/bash
 
-one=$1
+# Emplacement du projet
+PROJECT_DIR="$HOME/Documents/S5/MR_Naina/framework/framework_test"
 
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+# Emplacement du tomcat
+TOMCAT="$HOME/Documents/S5/apache-tomcat-10.1.28"
 
-BUILD_PATH="bin/"
-LIBRARY_PATH="lib/"
-TOMCAT_PATH="$HOME/Documents/S5/apache-tomcat-10.1.28"
-WEBAPPAS_PATH_LOCAL="src/webapps/"
-WEBAPPAS_PATH_SERVER="webapps/"
-WAR_NAME="Sprint1"
+# Nom de l'application dans webapps
+APP_NAME="framework"
 
-if [ "$one" = -1 ]; then
-    echo -e "$RED\t...Fermeture du Tomcat$NC\n"
-    "${TOMCAT_PATH}/bin/shutdown.sh" ; echo ""
+# Dossiers source
+SRC_JAVA="$PROJECT_DIR/src/java"
+SRC_WEBAPPS="$PROJECT_DIR/src/webapps"
+LIB_DIR="$PROJECT_DIR/lib"
+
+# Dossiers destination
+BIN_CLASSES="$PROJECT_DIR/bin/WEB-INF/classes"
+DEST_WEBAPPS="$TOMCAT/webapps/$APP_NAME"
+
+echo "=== COMPILATION + DEPLOIEMENT ==="
+
+# 1) Nettoyer les classes compilées
+echo "[1] Nettoyage des classes..."
+rm -rf "$BIN_CLASSES"
+mkdir -p "$BIN_CLASSES"
+
+# 2) Construire le classpath (pour compiler)
+CP="$LIB_DIR/frontServlet.jar:$TOMCAT/lib/servlet-api.jar:$BIN_CLASSES"
+
+# 3) Compiler les fichiers Java
+echo "[2] Compilation des fichiers .java..."
+find "$SRC_JAVA" -name "*.java" > sources.txt
+
+javac -parameters -cp "$CP" -d "$BIN_CLASSES" @sources.txt
+
+if [ $? -ne 0 ]; then
+    echo "❌ ERREUR DE COMPILATION"
     exit 1
 fi
 
-echo -e "$ORANGE\t...Lancement du Script\n$NC"
+echo "✔ Compilation terminée"
 
-echo -e "$BLUE...Compilation du code Java$NC\n"
+# 4) Nettoyer ancien déploiement Tomcat
+echo "[3] Nettoyage ancien déploiement..."
+rm -rf "$DEST_WEBAPPS"
+mkdir -p "$DEST_WEBAPPS"
 
-rm -rf "$BUILD_PATH"*
+# 5) Copier les fichiers web (jsp, html, png…)
+echo "[4] Copie des fichiers web..."
+cp -r "$SRC_WEBAPPS/"* "$DEST_WEBAPPS/"
 
-find . -name "*.java" > source.txt
+# 6) Copier WEB-INF (web.xml + classes)
+echo "[5] Copie de WEB-INF..."
+mkdir -p "$DEST_WEBAPPS/WEB-INF"
+cp -r "$PROJECT_DIR/bin/WEB-INF/"* "$DEST_WEBAPPS/WEB-INF/"
 
-if javac -d "$BUILD_PATH/WEB-INF/classes/" -cp "$LIBRARY_PATH/*" @source.txt; then
-    echo -e "${GREEN}\tCompilation reussie${NC}\n"
-else
-    echo -e "${RED}\tCompilation echouée${NC}\n"
-    rm source.txt
-    exit 1
-fi
+# 7) Copier les JAR dans WEB-INF/lib
+echo "[6] Copie des JAR dans WEB-INF/lib..."
+mkdir -p "$DEST_WEBAPPS/WEB-INF/lib"
+cp "$LIB_DIR/"*.jar "$DEST_WEBAPPS/WEB-INF/lib/"
 
-rm source.txt
-
-echo -e "${BLUE}...Copie du contenu du dossier WEB_APPS dans build${NC}\n"
-
-if cp -R "$WEBAPPAS_PATH_LOCAL"* "$BUILD_PATH"; then
-    echo -e "${GREEN}\tCopie Reussie${NC}\n"
-else
-    echo -e "${RED}\tErreur de Copie${NC}\n"
-    exit 1
-fi
-
-echo -e "${BLUE}...Creation du fichier WAR${NC}\n"
-
-cd "$BUILD_PATH" || exit 1
-
-if jar -cvf "../$WAR_NAME.war" ./* ; then
-    echo -e "${GREEN}\tArchivage Reussi${NC}\n"
-else
-    echo -e "${RED}\tErreur de l'archivage${NC}\n"
-    exit 1
-fi
-
-cd ..
-
-echo -e "${BLUE}...Deploiement dans le serveur Tomcat${NC}\n"
-
-if mv -f "$WAR_NAME.war" "$TOMCAT_PATH/$WEBAPPAS_PATH_SERVER" ; then
-    echo -e "${GREEN}\tDeploiement Reussi${NC}\n"
-else
-    echo -e "${RED}\tDeploiement echoué${NC}\n"
-    exit 1
-fi
-
-if pgrep -f tomcat > /dev/null; then
-    if [ -n "$one" ]; then
-        if [ "$one" = 0 ]; then 
-            echo -e "$RED\t...Fermeture du Tomcat$NC\n"
-            "${TOMCAT_PATH}/bin/shutdown.sh" ; echo ""
-        else
-            echo -e "${RED}Parametre inconnu${NC}\n"
-        fi 
-    fi
-else
-    echo -e "$RED\t...Lancement du Tomcat\n$NC"
-    "${TOMCAT_PATH}/bin/startup.sh" ; echo ""
-fi
-
-echo -e "$ORANGE\t...Fin du script$NC"
+echo "=== DEPLOIEMENT TERMINE ==="
+echo "Application deployée dans : $DEST_WEBAPPS"
+echo "JAR disponibles dans : $DEST_WEBAPPS/WEB-INF/lib/"
