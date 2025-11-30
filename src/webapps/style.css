@@ -1,0 +1,15 @@
+.input-label{
+        display:flex;
+        flex-direction: column;
+    }
+    form{
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width: 200px;
+        height: 00px;
+    }
+    form > button{
+        margin-top: 10px;
+    } 
