@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import annotation.Controleur;
+import annotation.GetHttp;
 import annotation.InputParam;
+import annotation.PostHttp;
 import annotation.UrlMapping;
 import modele.Etudiant;
 import utilitaire.ModelView;
@@ -72,7 +74,6 @@ public class EtudiantControlleur {
     public String getInfoEtudiants(String nom, @InputParam(paramName = "identifiant") int id ){
         
         for(Etudiant et: etudiants){
-            System.out.println("ahona hoe"+nom+" ; "+id);
             if(et.getNom().equals(nom) && et.getId() == id){
                 
                 return "info etudiant: {nom: "+nom+"; identifiant: "+id+" }";
@@ -92,5 +93,28 @@ public class EtudiantControlleur {
         }
         return "etudiant non trouve";
     }
+    @GetHttp(url="/etudiants")
+    public String  getAllEtudiants(){
+        StringBuilder builder = new StringBuilder();
+        for(Etudiant et: etudiants){
+            builder.append("id: "+et.getId()+"\n");
+            builder.append("nom: "+et.getNom()+"\n");
+            builder.append("prenoms: "+et.getPrenoms()+"\n");
+            builder.append("------------------\n");
+        }
+        return builder.toString();
+    }
+    @PostHttp(url="/etudiants")
+    public String creerEtudiant(String nom ,String prenoms){
+        StringBuilder builder = new StringBuilder();
+        builder.append("POST no mamaly \n");
+        int lastId = this.etudiants.size();
+        int currentId = lastId+1;
+        Etudiant e = new Etudiant(currentId,nom,prenoms);
+        this.etudiants.add(e);
+        builder.append("etudiant added with success");
+        return builder.toString();
+    }
+    
 }
 

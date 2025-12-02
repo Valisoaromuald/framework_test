@@ -59,9 +59,9 @@ public class App {
     File root = new File(System.getProperty("user.dir")); // adapte ce chemin
     System.out.println("\n=== Classes trouvées ===");
     try {
-        Map<String,MappingMethodClass> results = ClasseUtilitaire.generateUrlsWithMappedMethodClass(root);
-        Map.Entry<String, MappingMethodClass> entry = ClasseUtilitaire.getRelevantMethodAndClassNames(results, root, "/informatique");
-            System.out.println(entry.getKey()+":"+(entry.getValue()).getClassName()+" ; "+(entry.getValue()).getMethodName());
+        // Map<String,MappingMethodClass> results = ClasseUtilitaire.generateUrlsWithMappedMethodClass(root);
+        // Map.Entry<String, MappingMethodClass> entry = ClasseUtilitaire.getRelevantMethodAndClassNames(results, root, "/informatique");
+        //     System.out.println(entry.getKey()+":"+(entry.getValue()).getClassName()+" ; "+(entry.getValue()).getMethodName());
         
         //  List<String> methodAndClassNames = getMappingClassAndMethodByUrl(root, "");
         // System.out.println(methodAndClassNames.get(0)+" ; "+methodAndClassNames.get(1));
@@ -70,25 +70,25 @@ public class App {
         }
     }
 
-    public static Map<String, Object> getUrlWithMappingMethodClass(File file) throws Exception {
-        Map<String, Object> results = new HashMap<String, Object>();
-        System.out.println("nom de dosier: "+file.getAbsolutePath());
-        List<String> classNames = ClasseUtilitaire.findAllClassNames(file, "");
-        for (String className : classNames) {
-            Class<?> clazz = createClass(className);
-            System.out.println("nom de classe: "+clazz.getName()+" misy annotation ve: "+clazz.isAnnotationPresent(Controleur.class));
-            if (clazz.isAnnotationPresent(Controleur.class)) {
-                Method[] methodes = clazz.getDeclaredMethods();
-                for (Method m : methodes) {
-                    if (m.isAnnotationPresent(UrlMapping.class)) {
-                        results.put(m.getAnnotation(UrlMapping.class).url(),
-                                new MappingMethodClass(clazz.getName(), m.getName()));
-                    }
-                }
-            }
-        }
-        return results;
-    }
+    // public static Map<String, Object> getUrlWithMappingMethodClass(File file) throws Exception {
+    //     Map<String, Object> results = new HashMap<String, Object>();
+    //     System.out.println("nom de dosier: "+file.getAbsolutePath());
+    //     List<String> classNames = ClasseUtilitaire.findAllClassNames(file, "");
+    //     for (String className : classNames) {
+    //         Class<?> clazz = createClass(className);
+    //         System.out.println("nom de classe: "+clazz.getName()+" misy annotation ve: "+clazz.isAnnotationPresent(Controleur.class));
+    //         if (clazz.isAnnotationPresent(Controleur.class)) {
+    //             Method[] methodes = clazz.getDeclaredMethods();
+    //             for (Method m : methodes) {
+    //                 if (m.isAnnotationPresent(UrlMapping.class)) {
+    //                     results.put(m.getAnnotation(UrlMapping.class).url(),
+    //                             new MappingMethodClass(clazz.getName(), m.getName()));
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return results;
+    // }
     public static List<String> getMappingClassAndMethodByUrl(File root, String url) throws Exception {
         List<String> classes = ClasseUtilitaire.findAllClassNames(root, "");
         System.out.println(classes.size());
