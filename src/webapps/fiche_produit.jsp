@@ -11,7 +11,7 @@
 <body>
     <form action="${pageContext.request.contextPath}/produit" method="post">
         <label for="produit">Produit</label>
-        <input type="text" name="name">
+        <input type="text" name="nom">
         <label for="cat1">categorie1</label>
         <input type="checkbox" name="categories" id="categorie" value="categorie1" id="cat1">
         <label for="cat1">categorie 2</label>

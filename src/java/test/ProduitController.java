@@ -18,7 +18,7 @@ public class ProduitController {
         return mv;
     }
     @PostHttp(url="/produit")
-    public ModelView ficheProduit(Map<String,Object> maps,int id){
+    public ModelView ficheProduit(Map<String,Object> maps){
         ModelView mv  = new ModelView();
         mv.setView("fiche_produit.jsp");
         for(Map.Entry<String ,Object> entry: maps.entrySet()){
