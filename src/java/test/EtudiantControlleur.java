@@ -2,6 +2,7 @@ package test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import annotation.Controleur;
 import annotation.GetHttp;
@@ -105,16 +106,21 @@ public class EtudiantControlleur {
         return builder.toString();
     }
     @PostHttp(url="/etudiants")
-    public String creerEtudiant(String nom ,String prenoms){
+    public String creerEtudiant(String nom ,Map<String,Object> objects){
+        List<String> chaines  = new ArrayList<String>();
         StringBuilder builder = new StringBuilder();
         builder.append("POST no mamaly \n");
-        int lastId = this.etudiants.size();
-        int currentId = lastId+1;
-        Etudiant e = new Etudiant(currentId,nom,prenoms);
-        this.etudiants.add(e);
-        builder.append("etudiant added with success");
+        for(Map.Entry<String,Object> entry: objects.entrySet()){
+            builder.append(entry.getKey()+" "+ entry.getValue());
+        }
+        // int lastId = this.etudiants.size();
+        // int currentId = lastId+1;
+        // Etudiant e = new Etudiant(currentId,nom,prenoms);
+        // this.etudiants.add(e);
+        // builder.append("etudiant added with success");
         return builder.toString();
     }
     
+
 }
 
