@@ -98,7 +98,7 @@ public class EtudiantControlleur {
     public String  getAllEtudiants(){
         StringBuilder builder = new StringBuilder();
         for(Etudiant et: etudiants){
-            builder.append("id: "+et.getId()+"\n");
+            // builder.append("id: "+et.getId()+"\n");
             builder.append("nom: "+et.getNom()+"\n");
             builder.append("prenoms: "+et.getPrenoms()+"\n");
             builder.append("------------------\n");

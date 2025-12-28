@@ -2,8 +2,11 @@ package app;
 
 import utilitaire.ClasseUtilitaire;
 import utilitaire.MappingMethodClass;
+import utilitaire.Sprint8Bis;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,107 +15,93 @@ import java.util.Map;
 
 import annotation.Controleur;
 import annotation.UrlMapping;
+import modele.Maison;
 
 public class App {
-    public static List<String> findAllPathClassFiles(File rootDir, String packageName) throws ClassNotFoundException {
-        List<String> classes = new ArrayList<>();
-        for (File file : rootDir.listFiles()) {
-            if (file.isDirectory()) {
-                if (!file.getName().trim().equals(".git")) {
-                    String subPackage = packageName.isEmpty() ? file.getName() : packageName + "." + file.getName();
-                    classes.addAll(findAllPathClassFiles(file, subPackage));
-                }
-            } else if (file.getName().endsWith(".class")) {
-                String pathClassFile = packageName.isEmpty()
-                        ? file.getName().replace(".class", "")
-                        : packageName + "." + file.getName().replace(".class", "");
-                classes.add(pathClassFile);
-            }
-        }
-        return classes;
-    }
-
-    public static Class<?> createClass(String name) throws Exception {
-        String[] sousChemin = name.split("\\.");
-        int cpt = sousChemin.length - 1;
-        String realClassName = "";
-        Class<?> classe = null;
-        while (cpt >= 0) {
-            if (cpt == sousChemin.length - 1) {
-                realClassName = sousChemin[cpt];
-            } else {
-                realClassName = sousChemin[cpt] + "." + realClassName;
-            }
-            try {
-                classe = Class.forName(realClassName);
-                if (classe != null) {
-                    break;
-                }
-            } catch (ClassNotFoundException e) {
-            }
-            cpt--;
-        }
-        return classe;
-    }
-
     public static void main(String[] args) throws Exception {
-    File root = new File(System.getProperty("user.dir")); // adapte ce chemin
-    System.out.println("\n=== Classes trouvées ===");
-    try {
-        // Map<String,MappingMethodClass> results = ClasseUtilitaire.generateUrlsWithMappedMethodClass(root);
-        // Map.Entry<String, MappingMethodClass> entry = ClasseUtilitaire.getRelevantMethodAndClassNames(results, root, "/informatique");
-        //     System.out.println(entry.getKey()+":"+(entry.getValue()).getClassName()+" ; "+(entry.getValue()).getMethodName());
-        
-        //  List<String> methodAndClassNames = getMappingClassAndMethodByUrl(root, "");
-        // System.out.println(methodAndClassNames.get(0)+" ; "+methodAndClassNames.get(1));
-        } catch (Exception e) {
-            System.out.println("erreur: "+e.getMessage());
-        }
-    }
+        File root = new File(System.getProperty("user.dir")); // adapte ce chemin
+        System.out.println("\n=== Classes trouvées ===");
+        String str1 = "m.pieces[0][0]";
+        String str2 = "m.pieces[0][1]";
+        String str3 = "m.pieces[0][2]";
+        // String str4 = "pieces[1]";
+        // String str5 = "pieces[1]";
+        List<String> chaines = new ArrayList<String>(List.of(str2, str1, str3));
+        System.out.println(str3.lastIndexOf("]"));
 
-    // public static Map<String, Object> getUrlWithMappingMethodClass(File file) throws Exception {
-    //     Map<String, Object> results = new HashMap<String, Object>();
-    //     System.out.println("nom de dosier: "+file.getAbsolutePath());
-    //     List<String> classNames = ClasseUtilitaire.findAllClassNames(file, "");
-    //     for (String className : classNames) {
-    //         Class<?> clazz = createClass(className);
-    //         System.out.println("nom de classe: "+clazz.getName()+" misy annotation ve: "+clazz.isAnnotationPresent(Controleur.class));
-    //         if (clazz.isAnnotationPresent(Controleur.class)) {
-    //             Method[] methodes = clazz.getDeclaredMethods();
-    //             for (Method m : methodes) {
-    //                 if (m.isAnnotationPresent(UrlMapping.class)) {
-    //                     results.put(m.getAnnotation(UrlMapping.class).url(),
-    //                             new MappingMethodClass(clazz.getName(), m.getName()));
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return results;
-    // }
-    public static List<String> getMappingClassAndMethodByUrl(File root, String url) throws Exception {
-        List<String> classes = ClasseUtilitaire.findAllClassNames(root, "");
-        System.out.println(classes.size());
-        List<String> results =  new ArrayList<String>();
+        // List<Integer> listeNombresEntreCrochet1 =
+        // Sprint8Bis.getNombresEntreCrochet(str1);
+        // List<Integer> listeNombresEntreCrochet2 =
+        // Sprint8Bis.getNombresEntreCrochet(str2);
+        // System.out.println(Sprint8Bis.comparer(listeNombresEntreCrochet1,
+        // listeNombresEntreCrochet2));
+        // System.out.println("nombres entre crochet : "+listeNombresEntreCrochet);
         try {
-            for (String pathClassFile : classes) {
-                Class<?> clazz = createClass(pathClassFile);
-                System.out.println("nom de classe: "+clazz.getName()+" misy annotation ve: "+clazz.isAnnotationPresent(Controleur.class));
-                if (clazz.isAnnotationPresent(Controleur.class)) {
-                    Method[] methodes = clazz.getDeclaredMethods();
-                    for (Method m : methodes) {
-                        UrlMapping urlAnnotation = m.getAnnotation(UrlMapping.class);
-                            if (m.isAnnotationPresent(UrlMapping.class)) {
-                                results.add(clazz.getName());
-                                results.add(m.getName());
-                                break;
-                            }
-                    }
-                }
+            // System.out.println("chaines avant arrangements: "+chaines);
+            // Sprint8Bis.arrangerChainesParNombresEntreCrochet(chaines);
+            System.out.println("chaines eto e:"+chaines);
+            // System.out.println("chaines apres arrangements: "+chaines);
+            // List<String> chainesVaovao = Sprint8Bis.chainesAvecNombreCrochetAyantElementAtIndice(1, 1, chaines);
+            //   Object obj = Sprint8Bis.allouerTableau(0, 0, chaines, String[].class);
+            // System.out.println(Sprint8Bis.getTailleMax(0, chaines));
+            Class<?> clazz  = Maison.class;
+            Field f = clazz.getDeclaredField("pieces");
+            System.out.println(f.getType().getName());
+            // return;
+            Object obj = Sprint8Bis.allouerTableau(0, 0, chaines, f.getType());
+             System.out.println("obj:"+obj);
+            // // System.out.println(obj.getClass().getComponentType().getComponentType());
+            // String[][] tableaux = (String[][])obj;
+            int length = Array.getLength(obj);
+            for(int i = 0; i < length;i++){
+            //   System.out.println(" i= "+i);
+                Object element = Array.get(obj,i);
+                System.out.println("zany ny element:"+element);
             }
+            // System.out.println("objet: "+obj);
+            // List<Integer> listeEntiers1 = new ArrayList<>(List.of(1,2,3));
+            // List<Integer> listeEntiers2 = new ArrayList<>(List.of(1,2,3));
+            // System.out.println(listeEntiers1.equals(listeEntiers2));
 
-        } catch (Exception e) {
-            System.out.println("erreur : "+e.getMessage());
+            // System.out.println("liste chaines"+chainesVaovao);
+            // Map<String,MappingMethodClass> results =
+            // ClasseUtilitaire.generateUrlsWithMappedMethodClass(root);
+            // Map.Entry<String, MappingMethodClass> entry =
+            // ClasseUtilitaire.getRelevantMethodAndClassNames(results, root,
+            // "/informatique");
+            // System.out.println(entry.getKey()+":"+(entry.getValue()).getClassName()+" ;
+            // "+(entry.getValue()).getMethodName());
+
+            // List<String> methodAndClassNames = getMappingClassAndMethodByUrl(root, "");
+            // System.out.println(methodAndClassNames.get(0)+" ;
+            // "+methodAndClassNames.get(1));
+        } catch (
+
+        Exception e) {
+            e.printStackTrace();
+            System.out.println("erreur: " + e.getMessage());
         }
-        return results;
     }
+
+    // public static Map<String, Object> getUrlWithMappingMethodClass(File file)
+    // throws Exception {
+    // Map<String, Object> results = new HashMap<String, Object>();
+    // System.out.println("nom de dosier: "+file.getAbsolutePath());
+    // List<String> classNames = ClasseUtilitaire.findAllClassNames(file, "");
+    // for (String className : classNames) {
+    // Class<?> clazz = createClass(className);
+    // System.out.println("nom de classe: "+clazz.getName()+" misy annotation ve:
+    // "+clazz.isAnnotationPresent(Controleur.class));
+    // if (clazz.isAnnotationPresent(Controleur.class)) {
+    // Method[] methodes = clazz.getDeclaredMethods();
+    // for (Method m : methodes) {
+    // if (m.isAnnotationPresent(UrlMapping.class)) {
+    // results.put(m.getAnnotation(UrlMapping.class).url(),
+    // new MappingMethodClass(clazz.getName(), m.getName()));
+    // }
+    // }
+    // }
+    // }
+    // return results;
+    // }
 }
