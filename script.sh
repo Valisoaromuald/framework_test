@@ -60,7 +60,7 @@ mkdir -p "$BUILD_PATH/WEB-INF/classes"
 find src/java -name "*.java" > source.txt
 
 # Compilation
-if javac -parameters -d "$BUILD_PATH/WEB-INF/classes" -cp "$LIBRARY_PATH/*" @source.txt; then
+if javac -parameters -d "$BUILD_PATH/WEB-INF/classes" -cp "$BUILD_PATH/WEB-INF/lib/*" @source.txt; then
     echo -e "${GREEN}\tCompilation réussie${NC}\n"
 else
     echo -e "${RED}\tCompilation échouée${NC}\n"

@@ -2,7 +2,8 @@ package app;
 
 import utilitaire.ClasseUtilitaire;
 import utilitaire.MappingMethodClass;
-import utilitaire.Sprint8Bis;
+// import utilitaire.Sprint8Bis;
+import utilitaire.Sprint8Bis.ObjectChecking;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -16,6 +17,7 @@ import java.util.Map;
 import annotation.Controleur;
 import annotation.UrlMapping;
 import modele.Maison;
+import test.MaisonController;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -23,41 +25,35 @@ public class App {
         System.out.println("\n=== Classes trouvées ===");
         String str1 = "m.pieces[0][0]";
         String str2 = "m.pieces[0][1]";
-        String str3 = "m.pieces[0][2]";
-        // String str4 = "pieces[1]";
-        // String str5 = "pieces[1]";
-        List<String> chaines = new ArrayList<String>(List.of(str2, str1, str3));
-        System.out.println(str3.lastIndexOf("]"));
+        // String str3 = "m.pieces[0][2]";
+        // // String str4 = "pieces[1]";
+        // // String str5 = "pieces[1]";
+        // List<String> chaines = new ArrayList<String>(List.of(str2, str1, str3));
+        // System.out.println(str3.lastIndexOf("]"));
 
-        // List<Integer> listeNombresEntreCrochet1 =
-        // Sprint8Bis.getNombresEntreCrochet(str1);
-        // List<Integer> listeNombresEntreCrochet2 =
-        // Sprint8Bis.getNombresEntreCrochet(str2);
-        // System.out.println(Sprint8Bis.comparer(listeNombresEntreCrochet1,
-        // listeNombresEntreCrochet2));
-        // System.out.println("nombres entre crochet : "+listeNombresEntreCrochet);
-        try {
-            // System.out.println("chaines avant arrangements: "+chaines);
-            // Sprint8Bis.arrangerChainesParNombresEntreCrochet(chaines);
-            System.out.println("chaines eto e:"+chaines);
-            // System.out.println("chaines apres arrangements: "+chaines);
-            // List<String> chainesVaovao = Sprint8Bis.chainesAvecNombreCrochetAyantElementAtIndice(1, 1, chaines);
-            //   Object obj = Sprint8Bis.allouerTableau(0, 0, chaines, String[].class);
-            // System.out.println(Sprint8Bis.getTailleMax(0, chaines));
-            Class<?> clazz  = Maison.class;
-            Field f = clazz.getDeclaredField("pieces");
-            System.out.println(f.getType().getName());
-            // return;
-            Object obj = Sprint8Bis.allouerTableau(0, 0, chaines, f.getType());
-             System.out.println("obj:"+obj);
-            // // System.out.println(obj.getClass().getComponentType().getComponentType());
-            // String[][] tableaux = (String[][])obj;
-            int length = Array.getLength(obj);
-            for(int i = 0; i < length;i++){
-            //   System.out.println(" i= "+i);
-                Object element = Array.get(obj,i);
-                System.out.println("zany ny element:"+element);
-            }
+        // // List<Integer> listeNombresEntreCrochet1 =
+        // // Sprint8Bis.getNombresEntreCrochet(str1);
+        // // List<Integer> listeNombresEntreCrochet2 =
+        // // Sprint8Bis.getNombresEntreCrochet(str2);
+        // // System.out.println(Sprint8Bis.comparer(listeNombresEntreCrochet1,
+        // // listeNombresEntreCrochet2));
+        // // System.out.println("nombres entre crochet : "+listeNombresEntreCrochet);
+         try {
+            Class<?> clazz = MaisonController.class;
+            // Method m = clazz.getMethod("showInfo", null);
+            System.out.println(ObjectChecking.isListType(java.util.List.class));
+            Map<String, List<MappingMethodClass>> hafahafa = ClasseUtilitaire.generateUrlsWithMappedMethodClass(root);
+            System.out.println("hafahafa"+hafahafa);
+        //     // System.out.println("chaines avant arrangements: "+chaines);
+        //     // Sprint8Bis.arrangerChainesParNombresEntreCrochet(chaines);
+        //     System.out.println("chaines eto e:"+chaines);
+        //     // System.out.println("chaines apres arrangements: "+chaines);
+        //     // List<String> chainesVaovao = Sprint8Bis.chainesAvecNombreCrochetAyantElementAtIndice(1, 1, chaines);
+        //     //   Object obj = Sprint8Bis.allouerTableau(0, 0, chaines, String[].class);
+        //     // System.out.println(Sprint8Bis.getTailleMax(0, chaines));
+        //     Class<?> clazz  = Maison.class;
+        //     Field f = clazz.getDeclaredField("pieces");
+        //     System.out.println(f.getType().getName());
             // System.out.println("objet: "+obj);
             // List<Integer> listeEntiers1 = new ArrayList<>(List.of(1,2,3));
             // List<Integer> listeEntiers2 = new ArrayList<>(List.of(1,2,3));

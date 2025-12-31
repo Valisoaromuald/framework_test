@@ -1,7 +1,10 @@
 package test;
 
+import java.util.List;
+
 import annotation.Controleur;
 import annotation.GetHttp;
+import annotation.InputParam;
 import annotation.PostHttp;
 import modele.Maison;
 import utilitaire.ModelView;
@@ -15,14 +18,16 @@ public class MaisonController {
         return mv;
     }
     @PostHttp(url="/maisons")
-    public ModelView showInfo(Maison m){
+    public ModelView showInfo(Maison maison,@InputParam(paramName="lieux")String[] localisations,List<Maison[]> maisons){
         ModelView mv = new ModelView();
         mv.setView("maison.jsp");
-        System.out.println(m.getLocalisation());
-        System.out.println(m.getAdresse());
-        mv.addObject("localisation", m.getLocalisation());
-        mv.addObject("adresse", m.getAdresse());
-        mv.addObject("pieces",m.getPieces());
+        System.out.println(maison.getLocalisation());
+        System.out.println(maison.getAdresse());
+        // System.out.println("zany e:"+maisons.get(0).getLocalisation());
+        mv.addObject("localisation", maison.getLocalisation());
+        mv.addObject("adresse", maison.getAdresse());
+        mv.addObject("pieces",maison.getPieces());
+        mv.addObject("maisons",maisons);
         return mv;
     }
 }

@@ -24,6 +24,28 @@
                                         <label for="pieces[1]">Pieces 2</label>
                                         <input type="text" name="m.pieces[1].designation" id="pieces[1]" value="kitchen">
                                     </div>
+                                    <div class="input-label">
+                                        <label for="pieces[1]">Pieces 3</label>
+                                        <input type="text" name="m.pieces[3].designation" id="pieces[1]" value="">
+                                    </div>
+                                    <div class="input-label">
+                                        <label for="lieux[0]">Pieces 4</label>
+                                        <input type="text" name="lieux[0]" id="lieux[0]" value="besarety">
+                                    </div>
+                                    <div class="input-label">
+                                        <label for="lieux[1]">Pieces 5</label>
+                                        <input type="text" name="lieux[1]" id="lieux[1]" value="ampasapito">
+                                    </div>
+
+                                    <div class="input-label">
+                                        <label for="maisons[0]">beloha</label>
+                                        <input type="text" name="maisons[0][0].localisation" id="maisons[0].localisation" value="reko">
+                                    </div>
+                                    <div class="input-label">
+                                        <label for="maisons[1]">beloha</label>
+                                        <input type="text" name="maisons[0][1].localisation" id="lieux[1]" value="band">
+                                    </div>
+                                    
                                     <button type="submit">Afficher</button>
                                     </form>
 </body>
