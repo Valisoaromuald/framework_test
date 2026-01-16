@@ -9,7 +9,7 @@ import annotation.Controleur;
 import annotation.PostHttp;
 import annotation.UrlMapping;
 import utilitaire.ModelView;
-// @Controleur
+@Controleur
 public class UploadController {
 
     private  Path uploadDir;

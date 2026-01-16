@@ -41,7 +41,7 @@ public class App {
          try {
             Class<?> clazz = MaisonController.class;
             // Method m = clazz.getMethod("showInfo", null);
-            System.out.println(ObjectChecking.isListType(java.util.List.class));
+            // System.out.println(ObjectChecking.isListType(java.util.List.class));
             Map<String, List<MappingMethodClass>> hafahafa = ClasseUtilitaire.generateUrlsWithMappedMethodClass(root);
             System.out.println("hafahafa"+hafahafa);
         //     // System.out.println("chaines avant arrangements: "+chaines);

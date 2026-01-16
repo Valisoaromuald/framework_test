@@ -18,13 +18,12 @@ public class ProduitController {
         return mv;
     }
     @PostHttp(url="/produit")
-    public ModelView ficheProduit(Map<String,Object> maps){
+    public ModelView ficheProduit(Map<String,Object> maps,MapSession){
         ModelView mv  = new ModelView();
         mv.setView("fiche_produit.jsp");
         for(Map.Entry<String ,Object> entry: maps.entrySet()){
             mv.addObject(entry.getKey(),entry.getValue());
         }
         return mv;
-        
-    }
+        }
 }
